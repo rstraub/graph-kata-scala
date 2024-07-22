@@ -12,7 +12,7 @@ case class Family(private val graph: Graph[Person, Relation]) {
       .map(_.outgoing)
       .getOrElse(Set.empty)
       .flatMap {
-        case graph.InnerEdge(e, Sibling(_, _)) =>
+        case graph.InnerEdge(e, _: Sibling) =>
           e.ends.filterNot(_.outer == person)
         case _ => Set.empty
       }
@@ -26,11 +26,14 @@ case class Family(private val graph: Graph[Person, Relation]) {
       .find(person)
       .map(_.outgoing)
       .getOrElse(Set.empty)
-      .collectFirst { case graph.InnerEdge(e, Marriage(_, _, _)) => e.ends }
+      .collectFirst { case graph.InnerEdge(e, _: Marriage) => e.ends }
       .flatMap(e => e.find(_.outer != person))
       .map(_.outer)
 
-  def longestMarriage: (Person, Person, Int) = ???
+  def longestMarriage: Marriage =
+    graph.edges
+      .collect { case graph.InnerEdge(_, m: Marriage) => m }
+      .maxBy(_.years)
 
   def relationBetween(from: Person, to: Person): List[String] = ???
 }

@@ -81,16 +81,8 @@ class FamilyTreeSpec
     }
   }
 
-  "longestMarriage" should "return who are married the longest and how long" ignore {
-    // Graphs allow edges, or "relations" to have properties
-    // TODO expand marriage with a "label", a property describing the years of the marriage
-    // TODO add marriages to the family:
-    //  Joe <-> Jane 35 years,
-    //  Greg <-> Kristen 5 years,
-    //  Sally <-> Dustin 8 years,
-
-    // TODO make the test pass afterwards
-    aFamily.longestMarriage shouldBe (joe, jane, 35)
+  "longestMarriage" should "return who are married the longest and how long" in {
+    aFamily.longestMarriage shouldBe Marriage(joe, jane, 35)
   }
 
   "parentsOf" should "return parents of a person" ignore {
