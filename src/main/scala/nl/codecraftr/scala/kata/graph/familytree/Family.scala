@@ -5,11 +5,10 @@ case class Family() {
   def members: Set[Person] = ???
 
   def siblingsOf(person: Person): Set[Person] = ???
+  def parentsOf(person: Person): Set[Person] = ???
+  def ancestorsOf(person: Person): Set[Person] = ???
 
   def partnerOf(person: Person): Option[Person] = ???
-
-  def parentsOf(person: Person): Set[Person] = ???
-
   def longestMarriage: (Person, Person, Int) = ???
 }
 

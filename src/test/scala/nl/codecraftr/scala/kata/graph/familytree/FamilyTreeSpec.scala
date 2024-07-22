@@ -120,10 +120,18 @@ class FamilyTreeSpec
   }
 
   "ancestors" should "return who came before a before a person" in {
+    val cases = Table(
+      ("person", "ancestors"),
+      (charles, Set(greg, kristen, joe, jane)),
+      (mary, Set(sally, dustin, joe, jane)),
+      (greg, Set(joe, jane))
+    )
 
+    forAll(cases) { (person, ancestors) =>
+      aFamily.ancestorsOf(person) shouldBe ancestors
+    }
   }
 
-  // TODO ancestor (traversing)
   // TODO how is someone related? (path finding)
 
   // Members
