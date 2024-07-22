@@ -21,7 +21,15 @@ case class Family(private val graph: Graph[Person, Relation]) {
   def parentsOf(person: Person): Set[Person] = ???
   def ancestorsOf(person: Person): Set[Person] = ???
 
-  def partnerOf(person: Person): Option[Person] = ???
+  def partnerOf(person: Person): Option[Person] =
+    graph
+      .find(person)
+      .map(_.outgoing)
+      .getOrElse(Set.empty)
+      .collectFirst { case graph.InnerEdge(e, Marriage(_, _, _)) => e.ends }
+      .flatMap(e => e.find(_.outer != person))
+      .map(_.outer)
+
   def longestMarriage: (Person, Person, Int) = ???
 
   def relationBetween(from: Person, to: Person): List[String] = ???

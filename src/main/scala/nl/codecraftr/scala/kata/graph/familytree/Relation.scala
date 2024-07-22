@@ -11,3 +11,7 @@ sealed trait Relation extends AnyEdge[Person] {
 case class Sibling(from: Person, to: Person)
     extends AbstractUnDiEdge[Person](source = from, target = to)
     with Relation
+
+case class Marriage(from: Person, to: Person, years: Int)
+    extends AbstractUnDiEdge[Person](source = from, target = to)
+    with Relation
