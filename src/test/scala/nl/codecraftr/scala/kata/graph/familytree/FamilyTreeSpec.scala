@@ -33,7 +33,7 @@ class FamilyTreeSpec
     )
 
     forAll(cases) { (person, siblings) =>
-      aFamily.siblings(person) shouldBe siblings
+      aFamily.siblingsOf(person) shouldBe siblings
     }
   }
 
@@ -47,12 +47,23 @@ class FamilyTreeSpec
     )
 
     forAll(cases) { person =>
-      aFamily.siblings(person) shouldBe empty
+      aFamily.siblingsOf(person) shouldBe empty
     }
   }
 
   // 3: Who is partner to whom?
-  "partner" should "return the partner if a person is married" in {}
+  "partner" should "return the partner if a person is married" ignore {
+    val cases = Table(
+      ("person", "partner"),
+      (joe, jane),
+      (kristen, greg),
+      (sally, dustin)
+    )
+
+    forAll(cases) { (person, partner) =>
+      aFamily.partnerOf(person) shouldBe Some(partner)
+    }
+  }
 
   // Members
   private lazy val joe = Person("Joe", 61)
@@ -89,7 +100,7 @@ class FamilyTreeSpec
         Sibling(mike, jimmy),
         Sibling(mike, charles),
         Sibling(jimmy, charles),
-        Sibling(mary, jake),
+        Sibling(mary, jake)
       )
     )
 }
