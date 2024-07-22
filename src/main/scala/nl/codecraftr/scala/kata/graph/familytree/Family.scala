@@ -6,7 +6,17 @@ import scalax.collection.immutable.Graph
 case class Family(private val graph: Graph[Person, Relation]) {
   def members: Set[Person] = graph.nodes.map(_.outer).toSet
 
-  def siblingsOf(person: Person): Set[Person] = ???
+  def siblingsOf(person: Person): Set[Person] =
+    graph.nodes
+      .find(person)
+      .map(_.outgoing)
+      .getOrElse(Set.empty)
+      .flatMap {
+        case graph.InnerEdge(_, Sibling(from, to)) => Set(from, to)
+        case _                                     => Set.empty
+      }
+      .filterNot(_ == person)
+
   def parentsOf(person: Person): Set[Person] = ???
   def ancestorsOf(person: Person): Set[Person] = ???
 

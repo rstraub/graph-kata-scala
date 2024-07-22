@@ -23,7 +23,7 @@ class FamilyTreeSpec
   }
 
   // 2: What are siblings of a person?
-  "siblings" should "return siblings of a person" ignore {
+  "siblings" should "return siblings of a person" in {
     val cases = Table(
       ("person", "siblings"),
       (greg, Set(sally)),
@@ -37,7 +37,7 @@ class FamilyTreeSpec
     }
   }
 
-  it should "return be empty if the person has none" ignore {
+  it should "return be empty if the person has none" in {
     val cases = Table(
       "person",
       joe,
