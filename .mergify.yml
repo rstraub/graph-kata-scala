@@ -1,0 +1,20 @@
+pull_request_rules:
+    -   name: label scala-steward's PRs
+        conditions:
+            -   or:
+                    - author=scala-steward
+                    - author=scala-steward[bot]
+        actions:
+            label:
+                add:
+                    - dependency-update
+                remove: [ ]
+    -   name: merge scala-steward's PRs
+        conditions:
+            -   or:
+                    - author=scala-steward
+                    - author=scala-steward[bot]
+            - status-success=Quality Check
+        actions:
+            merge:
+                method: merge
