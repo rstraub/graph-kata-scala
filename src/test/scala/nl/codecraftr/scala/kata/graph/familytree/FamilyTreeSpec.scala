@@ -53,6 +53,8 @@ class FamilyTreeSpec
 
   // 3: Who is partner to whom?
   "partner" should "return the partner if a person is married" ignore {
+    // TODO create a new type of relation
+    // TODO add the relations to the family
     val cases = Table(
       ("person", "partner"),
       (joe, jane),
@@ -62,6 +64,21 @@ class FamilyTreeSpec
 
     forAll(cases) { (person, partner) =>
       aFamily.partnerOf(person) shouldBe Some(partner)
+    }
+  }
+
+  it should "return none if the person isn't married" ignore {
+    val cases = Table(
+      "person",
+      charles,
+      jimmy,
+      mike,
+      mary,
+      jake
+    )
+
+    forAll(cases) { person =>
+      aFamily.partnerOf(person) shouldBe None
     }
   }
 
