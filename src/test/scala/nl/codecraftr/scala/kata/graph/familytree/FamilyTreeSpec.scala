@@ -8,14 +8,6 @@ class FamilyTreeSpec
     extends AnyFlatSpec
     with Matchers
     with TableDrivenPropertyChecks {
-  // Build an abstraction that helps us answer questions about a family, like this:
-  /*
-                     Joe <-> Jane
-                    /           \
-      Kristen <-> Greg         Sally <-> Dustin
-          /    |   \                /  \
-    Charles Jimmy  Mike          Mary  Jake
-   */
 
   // 1: Build the family tree
   "family tree" should "be built" in {
@@ -85,9 +77,7 @@ class FamilyTreeSpec
     aFamily.longestMarriage shouldBe Marriage(joe, jane, 35)
   }
 
-  "parentsOf" should "return parents of a person" ignore {
-    // TODO create a new relation: Child (is it directional or undirectional?)
-    // TODO add the relations to the family
+  "parentsOf" should "return parents of a person" in {
     val cases = Table(
       ("person", "parents"),
       (charles, Set(greg, kristen)),
@@ -104,7 +94,7 @@ class FamilyTreeSpec
     }
   }
 
-  it should "return nothing if parents are unknown" ignore {
+  it should "return nothing if parents are unknown" in {
     aFamily.parentsOf(joe) shouldBe Set.empty
   }
 
@@ -166,6 +156,14 @@ class FamilyTreeSpec
   private lazy val mary = Person("Mary", 4)
   private lazy val jake = Person("jake", 3)
 
+  // Build an abstraction that helps us answer questions about a family, like this:
+  /*
+                       Joe <-> Jane
+                      /           \
+        Kristen <-> Greg         Sally <-> Dustin
+            /    |   \                /  \
+      Charles Jimmy  Mike          Mary  Jake
+   */
   private lazy val aFamily =
     Family.of(
       Set(
@@ -187,9 +185,27 @@ class FamilyTreeSpec
         Sibling(mike, charles),
         Sibling(jimmy, charles),
         Sibling(mary, jake),
+        // marriage
         Marriage(joe, jane, 35),
         Marriage(greg, kristen, 5),
-        Marriage(sally, dustin, 8)
+        Marriage(sally, dustin, 8),
+        // joe/jane
+        ChildTo(greg, joe),
+        ChildTo(greg, jane),
+        ChildTo(sally, joe),
+        ChildTo(sally, jane),
+        // sally
+        ChildTo(mary, sally),
+        ChildTo(mary, dustin),
+        ChildTo(jake, sally),
+        ChildTo(jake, dustin),
+        // greg
+        ChildTo(charles, greg),
+        ChildTo(jimmy, greg),
+        ChildTo(mike, greg),
+        ChildTo(charles, kristen),
+        ChildTo(jimmy, kristen),
+        ChildTo(mike, kristen)
       )
     )
 }
