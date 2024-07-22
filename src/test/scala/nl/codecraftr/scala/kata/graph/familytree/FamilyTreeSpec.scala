@@ -4,6 +4,8 @@ import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.prop.TableDrivenPropertyChecks
 
+import scala.collection.immutable.Set
+
 class FamilyTreeSpec
     extends AnyFlatSpec
     with Matchers
@@ -53,7 +55,7 @@ class FamilyTreeSpec
 
   // 3: Who is partner to whom?
   "partner" should "return the partner if a person is married" ignore {
-    // TODO create a new type of relation
+    // TODO create a new type of relation: Marriage
     // TODO add the relations to the family
     val cases = Table(
       ("person", "partner"),
@@ -81,6 +83,34 @@ class FamilyTreeSpec
       aFamily.partnerOf(person) shouldBe None
     }
   }
+
+  "parentsOf" should "return parents of a person" ignore {
+    // TODO create a new relation: Child (is it directional or undirectional?)
+    // TODO add the relations to the family
+    val cases = Table(
+      ("person", "parents"),
+      (charles, Set(greg, kristen)),
+      (jimmy, Set(greg, kristen)),
+      (mike, Set(greg, kristen)),
+      (mary, Set(sally, dustin)),
+      (jake, Set(sally, dustin)),
+      (sally, Set(joe, jane)),
+      (greg, Set(joe, jane))
+    )
+
+    forAll(cases) { (person, parents) =>
+      aFamily.parentsOf(person) shouldBe parents
+    }
+  }
+
+  it should "return nothing if parents are unknown" ignore {
+    aFamily.parentsOf(joe) shouldBe Set.empty
+  }
+
+  // TODO who are in the longest marriage?
+  // TODO related or not? (path finding)
+  // TODO ancestor (traversing)
+  // TODO how is someone related? (path finding)
 
   // Members
   private lazy val joe = Person("Joe", 61)

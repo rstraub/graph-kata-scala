@@ -7,6 +7,8 @@ case class Family() {
   def siblingsOf(person: Person): Set[Person] = ???
 
   def partnerOf(person: Person): Option[Person] = ???
+
+  def parentsOf(person: Person): Set[Person] = ???
 }
 
 object Family {
