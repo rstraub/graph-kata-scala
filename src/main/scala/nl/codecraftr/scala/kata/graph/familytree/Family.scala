@@ -12,10 +12,11 @@ case class Family(private val graph: Graph[Person, Relation]) {
       .map(_.outgoing)
       .getOrElse(Set.empty)
       .flatMap {
-        case graph.InnerEdge(_, Sibling(from, to)) => Set(from, to)
-        case _                                     => Set.empty
+        case graph.InnerEdge(e, Sibling(_, _)) =>
+          e.ends.filterNot(_.outer == person)
+        case _ => Set.empty
       }
-      .filterNot(_ == person)
+      .map(_.outer)
 
   def parentsOf(person: Person): Set[Person] = ???
   def ancestorsOf(person: Person): Set[Person] = ???
