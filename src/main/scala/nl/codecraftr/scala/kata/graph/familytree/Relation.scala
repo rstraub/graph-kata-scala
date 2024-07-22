@@ -1,8 +1,8 @@
 package nl.codecraftr.scala.kata.graph.familytree
 
-import scalax.collection.generic.AbstractUnDiEdge
+import scalax.collection.generic.{AbstractUnDiEdge, AnyEdge}
 
-sealed trait Relation {
+sealed trait Relation extends AnyEdge[Person] {
   def from: Person
   def to: Person
 }

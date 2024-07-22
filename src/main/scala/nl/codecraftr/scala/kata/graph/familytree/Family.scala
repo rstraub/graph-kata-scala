@@ -1,8 +1,10 @@
 package nl.codecraftr.scala.kata.graph.familytree
 
+import scalax.collection.immutable.Graph
+
 // How to build a graph -> https://scala-graph.org/guides/core/planning.html
-case class Family() {
-  def members: Set[Person] = ???
+case class Family(private val graph: Graph[Person, Relation]) {
+  def members: Set[Person] = graph.nodes.map(_.outer).toSet
 
   def siblingsOf(person: Person): Set[Person] = ???
   def parentsOf(person: Person): Set[Person] = ???
@@ -15,7 +17,6 @@ case class Family() {
 }
 
 object Family {
-  def of(persons: Set[Person], relations: Set[Relation]): Family = {
-    ???
-  }
+  def of(persons: Set[Person], relations: Set[Relation]): Family =
+    Family(Graph.from(persons, relations))
 }
