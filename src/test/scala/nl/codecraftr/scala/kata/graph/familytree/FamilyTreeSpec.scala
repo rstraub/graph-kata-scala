@@ -119,7 +119,7 @@ class FamilyTreeSpec
     aFamily.parentsOf(joe) shouldBe Set.empty
   }
 
-  "ancestors" should "return who came before a before a person" in {
+  "ancestors" should "return who came before a before a person" ignore {
     val cases = Table(
       ("person", "ancestors"),
       (charles, Set(greg, kristen, joe, jane)),
@@ -132,7 +132,29 @@ class FamilyTreeSpec
     }
   }
 
-  // TODO how is someone related? (path finding)
+  "relation" should "return how two persons are related" ignore {
+    // TODO feel free to use actual constructs like Child/Marriage etc
+    // TODO are the necessary relations in place?
+    val cases = Table(
+      ("persons", "relation"),
+      ((joe, jane), List("marriage (jane)")),
+      (
+        (kristen, jane),
+        List("marriage (greg)", "child (joe)", "marriage (jane)")
+      ),
+      (
+        (mike, mary),
+        List("child (greg)", "sibling (sally)", "parent (mary)")
+      )
+    )
+
+    forAll(cases) { (persons, relation) =>
+      aFamily.relationBetween(
+        from = persons._1,
+        to = persons._2
+      ) shouldBe relation
+    }
+  }
 
   // Members
   private lazy val joe = Person("Joe", 61)

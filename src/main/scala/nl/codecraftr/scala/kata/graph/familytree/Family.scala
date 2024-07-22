@@ -10,6 +10,8 @@ case class Family() {
 
   def partnerOf(person: Person): Option[Person] = ???
   def longestMarriage: (Person, Person, Int) = ???
+
+  def relationBetween(from: Person, to: Person): List[String] = ???
 }
 
 object Family {

@@ -2,9 +2,12 @@ package nl.codecraftr.scala.kata.graph.familytree
 
 import scalax.collection.generic.AbstractUnDiEdge
 
-sealed trait Relation
+sealed trait Relation {
+  def from: Person
+  def to: Person
+}
 
 // Relation without direction
-case class Sibling(sibling1: Person, sibling2: Person)
-    extends AbstractUnDiEdge[Person](source = sibling1, target = sibling2)
+case class Sibling(from: Person, to: Person)
+    extends AbstractUnDiEdge[Person](source = from, target = to)
     with Relation
