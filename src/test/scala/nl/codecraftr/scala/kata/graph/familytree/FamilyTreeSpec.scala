@@ -4,8 +4,6 @@ import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.prop.TableDrivenPropertyChecks
 
-import scala.collection.immutable.Set
-
 class FamilyTreeSpec
     extends AnyFlatSpec
     with Matchers
@@ -154,6 +152,12 @@ class FamilyTreeSpec
         to = persons._2
       ) shouldBe relation
     }
+  }
+
+  it should "be empty if there is no relation between two persons" ignore {
+    val notRelated = Family.of(Set(jane, joe), Set.empty)
+
+    notRelated.relationBetween(jane, joe) shouldBe empty
   }
 
   // Members
