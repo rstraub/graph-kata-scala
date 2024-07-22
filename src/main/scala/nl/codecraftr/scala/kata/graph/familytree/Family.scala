@@ -9,6 +9,8 @@ case class Family() {
   def partnerOf(person: Person): Option[Person] = ???
 
   def parentsOf(person: Person): Set[Person] = ???
+
+  def longestMarriage: (Person, Person, Int) = ???
 }
 
 object Family {

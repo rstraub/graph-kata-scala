@@ -84,6 +84,18 @@ class FamilyTreeSpec
     }
   }
 
+  "longestMarriage" should "return who are married the longest and how long" ignore {
+    // Graphs allow edges, or "relations" to have properties
+    // TODO expand marriage with a "label", a property describing the years of the marriage
+    // TODO add marriages to the family:
+    //  Joe <-> Jane 35 years,
+    //  Greg <-> Kristen 5 years,
+    //  Sally <-> Dustin 8 years,
+
+    // TODO make the test pass afterwards
+    aFamily.longestMarriage shouldBe (joe, jane, 35)
+  }
+
   "parentsOf" should "return parents of a person" ignore {
     // TODO create a new relation: Child (is it directional or undirectional?)
     // TODO add the relations to the family
@@ -107,8 +119,10 @@ class FamilyTreeSpec
     aFamily.parentsOf(joe) shouldBe Set.empty
   }
 
-  // TODO who are in the longest marriage?
-  // TODO related or not? (path finding)
+  "ancestors" should "return who came before a before a person" in {
+
+  }
+
   // TODO ancestor (traversing)
   // TODO how is someone related? (path finding)
 
