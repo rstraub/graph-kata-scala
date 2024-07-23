@@ -20,7 +20,10 @@ class SetsFamilyTree(persons: Set[Person], relations: Set[Relation])
     }
     .map(_.without(person))
 
-  override def longestMarriage: Marriage = ???
+  override def longestMarriage: Marriage =
+    relations
+      .collect { case m: Marriage => m }
+      .maxBy(_.years)
 
   override def relationBetween(from: Person, to: Person): List[String] = ???
 }
