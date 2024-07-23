@@ -12,10 +12,13 @@ class SetsFamilyTree(persons: Set[Person], relations: Set[Relation])
       .map(_.without(person))
 
   override def parentsOf(person: Person): Set[Person] = ???
-
   override def ancestorsOf(person: Person): Set[Person] = ???
 
-  override def partnerOf(person: Person): Option[Person] = ???
+  override def partnerOf(person: Person): Option[Person] = relations
+    .collectFirst {
+      case m: Marriage if m.from == person || m.to == person => m
+    }
+    .map(_.without(person))
 
   override def longestMarriage: Marriage = ???
 
