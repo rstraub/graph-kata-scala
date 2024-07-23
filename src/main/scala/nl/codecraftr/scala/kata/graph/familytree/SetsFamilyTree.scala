@@ -5,7 +5,7 @@ import scala.annotation.nowarn
 @nowarn
 class SetsFamilyTree(persons: Set[Person], relations: Set[Relation])
     extends FamilyTree {
-    override def members: Set[Person] = ???
+    override def members: Set[Person] = persons
 
     override def siblingsOf(person: Person): Set[Person] = ???
 

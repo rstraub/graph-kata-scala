@@ -3,8 +3,7 @@ package nl.codecraftr.scala.kata.graph.familytree
 import scalax.collection.immutable.Graph
 
 // How to build a graph -> https://scala-graph.org/guides/core/planning.html
-class GraphFamilyTree(graph: Graph[Person, Relation])
-    extends FamilyTree {
+class GraphFamilyTree(graph: Graph[Person, Relation]) extends FamilyTree {
   override def members: Set[Person] = graph.nodes.map(_.outer).toSet
 
   override def siblingsOf(person: Person): Set[Person] =
@@ -13,20 +12,18 @@ class GraphFamilyTree(graph: Graph[Person, Relation])
       .map(_.outgoing)
       .getOrElse(Set.empty)
       .flatMap {
-        case graph.InnerEdge(_, s: Sibling) =>
-          s.ends.filterNot(_ == person)
-        case _ => Set.empty
+        case graph.InnerEdge(_, s: Sibling) => Some(s)
+        case _                              => None
       }
+      .map(_.without(person))
 
   override def parentsOf(person: Person): Set[Person] =
     graph
       .find(person)
       .map(_.outgoing)
       .getOrElse(Set.empty)
-      .collect { case graph.InnerEdge(_, c: ChildTo) =>
-        c.ends.find(_ != person)
-      }
-      .flatten
+      .collect { case graph.InnerEdge(_, c: ChildTo) => c }
+      .map(_.without(person))
 
   override def ancestorsOf(person: Person): Set[Person] = ???
 
@@ -35,10 +32,8 @@ class GraphFamilyTree(graph: Graph[Person, Relation])
       .find(person)
       .map(_.outgoing)
       .getOrElse(Set.empty)
-      .collectFirst { case graph.InnerEdge(_, m: Marriage) =>
-        m.ends.find(_ != person)
-      }
-      .flatten
+      .collectFirst { case graph.InnerEdge(_, m: Marriage) => m }
+      .map(_.without(person))
 
   override def longestMarriage: Marriage =
     graph.edges
