@@ -11,14 +11,21 @@ class SetsFamilyTree(persons: Set[Person], relations: Set[Relation])
       }
       .map(_.without(person))
 
-  override def parentsOf(person: Person): Set[Person] = ???
+  override def parentsOf(person: Person): Set[Person] =
+    relations
+      .collect {
+        case c: ChildTo if c.from == person => c
+      }
+      .map(_.without(person))
+
   override def ancestorsOf(person: Person): Set[Person] = ???
 
-  override def partnerOf(person: Person): Option[Person] = relations
-    .collectFirst {
-      case m: Marriage if m.from == person || m.to == person => m
-    }
-    .map(_.without(person))
+  override def partnerOf(person: Person): Option[Person] =
+    relations
+      .collectFirst {
+        case m: Marriage if m.from == person || m.to == person => m
+      }
+      .map(_.without(person))
 
   override def longestMarriage: Marriage =
     relations
