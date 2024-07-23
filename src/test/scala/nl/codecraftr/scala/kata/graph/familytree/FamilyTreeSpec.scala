@@ -136,7 +136,7 @@ class FamilyTreeSpec
   }
 
   it should "be empty if there is no relation between two persons" ignore {
-    val notRelated = Family.of(Set(jane, joe), Set.empty)
+    val notRelated = FamilyTree.graph(Set(jane, joe), Set.empty)
 
     notRelated.relationBetween(jane, joe) shouldBe empty
   }
@@ -165,7 +165,7 @@ class FamilyTreeSpec
       Charles Jimmy  Mike          Mary  Jake
    */
   private lazy val aFamily =
-    Family.of(
+    FamilyTree.graph(
       Set(
         joe,
         jane,
