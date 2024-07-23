@@ -21,4 +21,7 @@ trait FamilyTree {
 object FamilyTree {
   def graph(persons: Set[Person], relations: Set[Relation]): FamilyTree =
     new GraphFamilyTree(Graph.from(persons, relations))
+
+  def sets(persons: Set[Person], relations: Set[Relation]): FamilyTree =
+    new SetsFamilyTree(persons, relations)
 }
